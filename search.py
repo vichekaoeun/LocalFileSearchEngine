@@ -13,21 +13,17 @@ class search:
                 file_path = os.path.join(roots, file) #combine file path with root path
                 self.file_index[file] = file_path #append this path to 'file_index'
     
-    def search(self, query): #Performs the actual search, Query is user-input
+    def search(self, query, type='contain'): #Performs the actual search, Query is user-input
         self.result = [] #clear previous result
         self.match = 0 #resets match
         self.records = 0 #resets records
         
         for files, path in self.file_index.items():
             self.records += 1
-            if query.lower() in files.lower():
+            if (type == 'contain' and query.lower() in files.lower() or
+                type == 'startwith' and files.lower().startswith(query.lower()) or
+                type == 'endwith' and files.lower().endswith(query.lower())):
                     result = path.replace('\\', '/') + '/' + files
                     self.result.append(result)
                     self.match += 1 #increment match for every match found
-
-        
-
-
-
-
 
