@@ -24,7 +24,7 @@ class search:
                     result = path.replace('\\', '/') + '/' + files
                     self.result.append(result)
                     self.match += 1 #increment match for every match found
-                
+
         
 
 
