@@ -23,6 +23,8 @@ class gui():
         FrameD = tk.Frame(root)
         self.LabelD = tk.Label(FrameD, text="Current Directory")
         self.Directory = tk.Entry(FrameD)
+        self.Directory.insert(tk.END, '/mnt/c')
+        self.selected_directory = '/mnt/c'
         self.BrowseButton = tk.Button(FrameD, text="browse", command=self.browse)
         FrameB = tk.Frame(FrameS)
         self.CBox = tk.Checkbutton(FrameB, text='Contains',onvalue='contain', variable=self.var1)
@@ -82,10 +84,12 @@ class gui():
         self.Output.insert(tk.END, results)
     
     def browse(self):
-        self.Directory.delete(0, tk.END)
         filedirectory = filedialog.askdirectory(initialdir='/mnt/c')
-        self.folder_path.set(filedirectory)
-        self.Directory.insert(0, filedirectory)
+        if filedirectory:
+            self.selected_directory = filedirectory
+            self.Directory.delete(0, tk.END)
+            self.folder_path.set(filedirectory)
+            self.Directory.insert(0, self.selected_directory)
             
     
     def stop_search(self):
