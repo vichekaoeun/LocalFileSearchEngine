@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import filedialog
 import search as sr
 import threading
 
@@ -11,6 +12,7 @@ class gui():
         self.var1 = tk.StringVar(value='contain')
         self.var2 = tk.StringVar(value='startwith')
         self.var3 = tk.StringVar(value='endwith')
+        self.folder_path = tk.StringVar()
         
         #-------Widgets---------------------
         FrameS = tk.Frame(root)
@@ -21,6 +23,7 @@ class gui():
         FrameD = tk.Frame(root)
         self.LabelD = tk.Label(FrameD, text="Current Directory")
         self.Directory = tk.Entry(FrameD)
+        self.BrowseButton = tk.Button(FrameD, text="browse", command=self.browse)
         FrameB = tk.Frame(FrameS)
         self.CBox = tk.Checkbutton(FrameB, text='Contains',onvalue='contain', variable=self.var1)
         self.SBox = tk.Checkbutton(FrameB, text='StartsWith',onvalue='startwith', variable=self.var2, offvalue='')
@@ -50,6 +53,7 @@ class gui():
         FrameD.grid(row=1, column=1, sticky="wen", columnspan=2) 
         self.LabelD.grid(row=0, column=1, sticky='nw')
         self.Directory.grid(row=1 , column=1)
+        self.BrowseButton.grid(row=1, column=2, padx=10)
         self.Output.grid(row=2, column=1, columnspan=1 ,sticky='new')
 
     def start_search(self):
@@ -76,6 +80,13 @@ class gui():
         self.Output.insert(tk.END, message)
         results = "\n".join(self.file_search.result)
         self.Output.insert(tk.END, results)
+    
+    def browse(self):
+        self.Directory.delete(0, tk.END)
+        filedirectory = filedialog.askdirectory(initialdir='/mnt/c')
+        self.folder_path.set(filedirectory)
+        self.Directory.insert(0, filedirectory)
+            
     
     def stop_search(self):
         pass  
